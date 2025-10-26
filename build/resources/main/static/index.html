@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeCard Dashboard</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <!-- make logo -->
+        <div class="header-icon"></div>
+        <h1 class="header-title">SafeCard</h1>
+        <p class="header-subtitle">
+          Secure card information storage and management
+        </p>
+      </header>
+
+      <section class="card stats-card">
+        <div>
+          <div class="stats-value" id="totalCards">0</div>
+          <div class="stats-label">Total Cards</div>
+        </div>
+        <div class="stats-icon"></div>
+      </section>
+
+      <section>
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="grid two-column">
+          <a href="add-card.html" class="quick-action">
+            <div class="quick-action-title">Add New Card</div>
+            <div class="quick-action-desc">
+              Securely add a new cardholder record to the system.
+            </div>
+          </a>
+          <a href="search.html" class="quick-action">
+            <div class="quick-action-title">Search Cards</div>
+            <div class="quick-action-desc">
+              Find cardholder records using the last 4 digits.
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top: 32px">
+        <div class="card-header">
+          <div class="card-header-icon"></div>
+          <div>
+            <h2>Recent Activity</h2>
+            <p>Latest cardholder records added to the system.</p>
+          </div>
+        </div>
+        <div id="recentActivity" class="activity-list"></div>
+        <div id="recentFallback" class="table-empty" style="display: none">
+          No card data available yet. Add your first card to get started.
+        </div>
+      </section>
+    </div>
+
+    <script src="assets/app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const totalCardsEl = document.getElementById("totalCards");
+        const recentActivityEl = document.getElementById("recentActivity");
+        const fallbackEl = document.getElementById("recentFallback");
+
+        try {
+          const data = (await CardApi.listCards()) || [];
+          const cards = Array.isArray(data) ? data : data.content || [];
+
+          totalCardsEl.textContent = cards.length;
+
+          if (cards.length === 0) {
+            fallbackEl.style.display = "block";
+            return;
+          }
+
+          const sorted = cards.slice().sort((a, b) => {
+            const aTime = new Date(
+              a.createdAt || a.createdTime || a.createdDate || 0
+            ).getTime();
+            const bTime = new Date(
+              b.createdAt || b.createdTime || b.createdDate || 0
+            ).getTime();
+            return bTime - aTime;
+          });
+
+          const recent = sorted.slice(0, 3);
+          recentActivityEl.innerHTML = "";
+
+          recent.forEach((card) => {
+            const item = document.createElement("div");
+            item.className = "activity-item";
+            item.innerHTML = `
+              <div class="record-icon"></div>
+              <div class="activity-meta">
+                <div style="font-weight:600;">
+                  ${card.cardholderName || "Unknown"}
+                </div>
+                <div class="muted">${CardUi.formatMaskedPan(card)}</div>
+              </div>
+              <div class="activity-item-time">
+                ${CardUi.formatTimestamp(card.createdAt || card.createdTime || card.createdDate)}
+              </div>
+            `;
+            recentActivityEl.appendChild(item);
+          });
+        } catch (error) {
+          fallbackEl.textContent =
+            "Unable to load data. Please ensure the backend is running.";
+          fallbackEl.style.display = "block";
+        }
+      });
+    </script>
+  </body>
+</html>
