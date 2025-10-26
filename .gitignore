@@ -1,0 +1,6 @@
+cardmanagement-1-firebase-adminsdk-*.json
+serviceAccountKey.json
+build/
+.gradle/
+.DS_Store
+
