@@ -7,7 +7,11 @@ for example for mysql would need to configure docker as well and would only pers
 could use in memory H2 database but that is comparatively more to set up than firebase
 
 TODO
-MAKE SURE WITH ./gradlew the webpage gets opened on its own
+MAKE SURE WITH ./gradlew the webpage gets opened on its own - done
+seach
+security
+improve frontend
+
 
 REMEBER
 DO NOT PUSH THE JSON FILE WITH API KEY

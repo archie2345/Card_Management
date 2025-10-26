@@ -21,6 +21,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation "com.google.firebase:firebase-admin:9.4.1"
@@ -28,4 +29,25 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+//added for opening app by itself
+tasks.named('bootRun') {
+	doFirst {
+		Thread.start {
+			try {
+				Thread.sleep(5_000)
+				def url = "http://localhost:8080"
+				def os = System.getProperty("os.name").toLowerCase()
+				if (os.contains("mac")) {
+					["open", url].execute()
+				} else if (os.contains("win")) {
+					["cmd", "/c", "start", url].execute()
+				} else {
+					["xdg-open", url].execute()
+				}
+			} catch (Exception ignored) {
+				//making sure the app still starts
+			}
+		}
+	}
 }
