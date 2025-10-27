@@ -53,4 +53,6 @@ Firestore stores card records in the `cards` collection. Each document follows t
 | GET    | `/api/cards`        | 
 | GET    | `/api/cards/search` | 
 
-
+## NOTE
+This repo includes a dev-only service-account JSON so ./gradlew bootRun works with zero setup.
+In the future we can - Remove the key, default to in-memory demo and for Firestore set firebase.credentials-file and rotate/revoke the old key.
