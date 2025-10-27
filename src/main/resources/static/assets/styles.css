@@ -11,6 +11,19 @@ a {
   text-decoration: none;
 }
 
+.anticon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.anticon svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
 .page {
   max-width: 960px;
   margin: 48px auto;
@@ -65,6 +78,10 @@ a {
   color: #1f2933;
   background: #e0f2ff;
   font-size: 22px;
+}
+
+.card-header-icon .anticon {
+  font-size: 20px;
 }
 
 .card h2 {
@@ -173,20 +190,84 @@ input[type="number"]:focus {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.quick-action-grid {
+  gap: 20px;
+}
+
+.panel {
+  margin-top: 32px;
+}
+
+.panel-hidden {
+  display: none;
+}
+
+.panel .card {
+  margin-bottom: 24px;
+}
+
 .quick-action {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
   background: #ffffff;
   padding: 24px;
   border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-  transition: transform 0.12s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease,
+    background-color 0.2s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .quick-action:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 26px rgba(15, 23, 42, 0.12);
+}
+
+.quick-action:focus-visible {
+  outline: 3px solid rgba(76, 110, 245, 0.35);
+  outline-offset: 2px;
+}
+
+.quick-action.active {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.12);
+}
+
+.quick-action.add.active {
+  border-color: rgba(22, 101, 216, 0.35);
+  background: #e8f2ff;
+}
+
+.quick-action.search.active {
+  border-color: rgba(47, 158, 68, 0.35);
+  background: #ecf8ef;
+}
+
+.quick-action-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.quick-action-icon.add {
+  background: #e0f2ff;
+  color: #1665d8;
+}
+
+.quick-action-icon.search {
+  background: #e6f4ea;
+  color: #2f9e44;
 }
 
 .quick-action-title {
@@ -265,6 +346,10 @@ tbody td {
   font-size: 18px;
 }
 
+.record-icon .anticon {
+  font-size: 18px;
+}
+
 .muted {
   color: #8c97a5;
   font-size: 13px;
@@ -300,6 +385,10 @@ tbody td {
   justify-content: center;
   font-size: 30px;
   margin-bottom: 16px;
+}
+
+.header-icon .anticon {
+  font-size: 28px;
 }
 
 .header-title {
@@ -346,6 +435,10 @@ tbody td {
   font-size: 24px;
 }
 
+.stats-icon .anticon {
+  font-size: 22px;
+}
+
 .section-title {
   font-size: 18px;
   font-weight: 600;
@@ -378,6 +471,16 @@ tbody td {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.search-actions .action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-actions .action-button .anticon {
+  font-size: 18px;
 }
 
 .search-actions button {

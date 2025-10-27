@@ -10,17 +10,19 @@ public class CardRecord {
 
     private String id;
     private String cardholderName;
-    private String pan;
+    private String panCiphertext;
+    private String lastFourHash;
     private Instant createdAt;
 
     public CardRecord() {
 
     }
 
-    public CardRecord(String id, String cardholderName, String pan, Instant createdAt) {
+    public CardRecord(String id, String cardholderName, String panCiphertext, String lastFourHash, Instant createdAt) {
         this.id = id;
         this.cardholderName = cardholderName;
-        this.pan = pan;
+        this.panCiphertext = panCiphertext;
+        this.lastFourHash = lastFourHash;
         this.createdAt = createdAt;
     }
 
@@ -41,12 +43,20 @@ public class CardRecord {
         this.cardholderName = cardholderName;
     }
 
-    public String getPan() {
-        return pan;
+    public String getPanCiphertext() {
+        return panCiphertext;
     }
 
-    public void setPan(String pan) {
-        this.pan = pan;
+    public void setPanCiphertext(String panCiphertext) {
+        this.panCiphertext = panCiphertext;
+    }
+
+    public String getLastFourHash() {
+        return lastFourHash;
+    }
+
+    public void setLastFourHash(String lastFourHash) {
+        this.lastFourHash = lastFourHash;
     }
 
     public Instant getCreatedAt() {

@@ -9,8 +9,23 @@
   <body>
     <div class="page">
       <header class="header">
-        <!-- make logo -->
-        <div class="header-icon"></div>
+        <div class="header-icon">
+          <span class="anticon anticon-credit-card" aria-hidden="true">
+            <svg
+              viewBox="64 64 896 896"
+              focusable="false"
+              data-icon="credit-card"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M880 298H144c-17.7 0-32 14.3-32 32v364c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V330c0-17.7-14.3-32-32-32zm-8 388H152V438h720v248zm0-308H152v-48h720v48zM344 562h248v60H344z"
+              ></path>
+            </svg>
+          </span>
+        </div>
         <h1 class="header-title">SafeCard</h1>
         <p class="header-subtitle">
           Secure card information storage and management
@@ -22,95 +37,259 @@
           <div class="stats-value" id="totalCards">0</div>
           <div class="stats-label">Total Cards</div>
         </div>
-        <div class="stats-icon"></div>
+        <div class="stats-icon">
+          <span class="anticon anticon-credit-card" aria-hidden="true">
+            <svg
+              viewBox="64 64 896 896"
+              focusable="false"
+              data-icon="credit-card"
+              width="1em"
+              height="1em"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M880 298H144c-17.7 0-32 14.3-32 32v364c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V330c0-17.7-14.3-32-32-32zm-8 388H152V438h720v248zm0-308H152v-48h720v48zM344 562h248v60H344z"
+              ></path>
+            </svg>
+          </span>
+        </div>
       </section>
 
       <section>
         <h2 class="section-title">Quick Actions</h2>
-        <div class="grid two-column">
-          <a href="add-card.html" class="quick-action">
+        <div class="grid two-column quick-action-grid">
+          <button type="button" class="quick-action add active" data-panel="add">
+            <span class="quick-action-icon add">
+              <span class="anticon anticon-plus" aria-hidden="true">
+                <svg
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="plus"
+                  width="1em"
+                  height="1em"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M482 152h60v270h270v60H542v270h-60V482H212v-60h270z"
+                  ></path>
+                </svg>
+              </span>
+            </span>
             <div class="quick-action-title">Add New Card</div>
             <div class="quick-action-desc">
               Securely add a new cardholder record to the system.
             </div>
-          </a>
-          <a href="search.html" class="quick-action">
+          </button>
+          <button
+            type="button"
+            class="quick-action search"
+            data-panel="search"
+          >
+            <span class="quick-action-icon search">
+              <span class="anticon anticon-search" aria-hidden="true">
+                <svg
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="search"
+                  width="1em"
+                  height="1em"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M909.6 854.5L701.9 646.8A318.4 318.4 0 00712 512c0-176.7-143.3-320-320-320S72 335.3 72 512s143.3 320 320 320c73 0 140.1-24.3 194.1-65.2l208.6 207.7a8 8 0 0011.3 0l82-82a8 8 0 000-11.3zM392 704c-106 0-192-86-192-192s86-192 192-192 192 86 192 192-86 192-192 192z"
+                  ></path>
+                </svg>
+              </span>
+            </span>
             <div class="quick-action-title">Search Cards</div>
             <div class="quick-action-desc">
               Find cardholder records using the last 4 digits.
             </div>
-          </a>
+          </button>
         </div>
       </section>
 
-      <section class="card" style="margin-top: 32px">
-        <div class="card-header">
-          <div class="card-header-icon"></div>
-          <div>
-            <h2>Recent Activity</h2>
-            <p>Latest cardholder records added to the system.</p>
+      <section class="panel" id="addPanel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <span class="anticon anticon-plus" aria-hidden="true">
+                <svg
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="plus"
+                  width="1em"
+                  height="1em"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M482 152h60v270h270v60H542v270h-60V482H212v-60h270z"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+            <div>
+              <h2>Cardholder Information</h2>
+              <p>Enter the card details below. All data will be encrypted.</p>
+            </div>
           </div>
+
+          <form id="addCardForm" class="form-grid">
+            <div>
+              <label for="cardholderName">
+                Cardholder Name *
+                <span>Full name as it appears on the card.</span>
+              </label>
+              <input
+                type="text"
+                id="cardholderName"
+                name="cardholderName"
+                placeholder="e.g., John Doe"
+                required
+              />
+            </div>
+
+            <div>
+              <label for="cardNumber">
+                Card Number (PAN) *
+                <span>16 digits - will be encrypted before storage.</span>
+              </label>
+              <input
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                inputmode="numeric"
+                maxlength="19"
+                placeholder="1234 5678 9012 3456"
+                required
+              />
+            </div>
+
+            <button type="submit" class="action-button primary">
+              <span class="anticon anticon-plus" aria-hidden="true">
+                <svg
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="plus"
+                  width="1em"
+                  height="1em"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M482 152h60v270h270v60H542v270h-60V482H212v-60h270z"
+                  ></path>
+                </svg>
+              </span>
+              Add Card Securely
+            </button>
+            <div id="formMessage" class="message"></div>
+          </form>
         </div>
-        <div id="recentActivity" class="activity-list"></div>
-        <div id="recentFallback" class="table-empty" style="display: none">
-          No card data available yet. Add your first card to get started.
+      </section>
+
+      <section class="panel panel-hidden" id="searchPanel">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <span class="anticon anticon-search" aria-hidden="true">
+                <svg
+                  viewBox="64 64 896 896"
+                  focusable="false"
+                  data-icon="search"
+                  width="1em"
+                  height="1em"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M909.6 854.5L701.9 646.8A318.4 318.4 0 00712 512c0-176.7-143.3-320-320-320S72 335.3 72 512s143.3 320 320 320c73 0 140.1-24.3 194.1-65.2l208.6 207.7a8 8 0 0011.3 0l82-82a8 8 0 000-11.3zM392 704c-106 0-192-86-192-192s86-192 192-192 192 86 192 192-86 192-192 192z"
+                  ></path>
+                </svg>
+              </span>
+            </div>
+            <div>
+              <h2>Search by Last 4 Digits</h2>
+              <p>Enter the last 4 digits of the card number to search.</p>
+            </div>
+          </div>
+
+          <form id="searchForm" class="form-grid">
+            <div>
+              <label for="last4">Last 4 Digits</label>
+              <input
+                type="text"
+                id="last4"
+                maxlength="4"
+                inputmode="numeric"
+                placeholder="1234"
+                required
+              />
+            </div>
+            <div class="search-actions">
+              <button type="submit" class="action-button primary">
+                <span class="anticon anticon-search" aria-hidden="true">
+                  <svg
+                    viewBox="64 64 896 896"
+                    focusable="false"
+                    data-icon="search"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M909.6 854.5L701.9 646.8A318.4 318.4 0 00712 512c0-176.7-143.3-320-320-320S72 335.3 72 512s143.3 320 320 320c73 0 140.1-24.3 194.1-65.2l208.6 207.7a8 8 0 0011.3 0l82-82a8 8 0 000-11.3zM392 704c-106 0-192-86-192-192s86-192 192-192 192 86 192 192-86 192-192 192z"
+                    ></path>
+                  </svg>
+                </span>
+                Search
+              </button>
+            </div>
+            <div id="searchMessage" class="message"></div>
+          </form>
+        </div>
+
+        <div class="table-card">
+          <div class="table-header">
+            <div>
+              <div class="section-title" style="margin-bottom: 4px">
+                Card Showing
+              </div>
+              <div class="section-subtitle" id="resultsSubtitle">
+                Showing 0 cards
+              </div>
+            </div>
+            <div class="badge" id="recordsCount">0 Records</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Cardholder Name</th>
+                <th>Masked PAN</th>
+                <th>Created Time</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody">
+              <tr>
+                <td colspan="3" class="table-empty">
+                  Use the search form to load card records.
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
     </div>
 
     <script src="assets/app.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        const totalCardsEl = document.getElementById("totalCards");
-        const recentActivityEl = document.getElementById("recentActivity");
-        const fallbackEl = document.getElementById("recentFallback");
-
-        try {
-          const data = (await CardApi.listCards()) || [];
-          const cards = Array.isArray(data) ? data : data.content || [];
-
-          totalCardsEl.textContent = cards.length;
-
-          if (cards.length === 0) {
-            fallbackEl.style.display = "block";
-            return;
-          }
-
-          const sorted = cards.slice().sort((a, b) => {
-            const aTime = new Date(
-              a.createdAt || a.createdTime || a.createdDate || 0
-            ).getTime();
-            const bTime = new Date(
-              b.createdAt || b.createdTime || b.createdDate || 0
-            ).getTime();
-            return bTime - aTime;
-          });
-
-          const recent = sorted.slice(0, 3);
-          recentActivityEl.innerHTML = "";
-
-          recent.forEach((card) => {
-            const item = document.createElement("div");
-            item.className = "activity-item";
-            item.innerHTML = `
-              <div class="record-icon"></div>
-              <div class="activity-meta">
-                <div style="font-weight:600;">
-                  ${card.cardholderName || "Unknown"}
-                </div>
-                <div class="muted">${CardUi.formatMaskedPan(card)}</div>
-              </div>
-              <div class="activity-item-time">
-                ${CardUi.formatTimestamp(card.createdAt || card.createdTime || card.createdDate)}
-              </div>
-            `;
-            recentActivityEl.appendChild(item);
-          });
-        } catch (error) {
-          fallbackEl.textContent =
-            "Unable to load data. Please ensure the backend is running.";
-          fallbackEl.style.display = "block";
-        }
+      document.addEventListener("DOMContentLoaded", () => {
+        CardUi.initDashboard();
       });
     </script>
   </body>
