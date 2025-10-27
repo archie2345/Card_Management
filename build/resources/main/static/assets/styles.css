@@ -123,7 +123,18 @@ input[type="number"] {
   border: 1px solid #d8dee4;
   font-size: 15px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  background: #f8fafc;
+  background: #fbfdff;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: #c9d3de;
+  opacity: 1;
+}
+
+input[type="text"]::-ms-input-placeholder,
+input[type="number"]::-ms-input-placeholder {
+  color: #c9d3de;
 }
 
 input[type="text"]:focus,

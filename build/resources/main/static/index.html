@@ -134,7 +134,7 @@
             </div>
             <div>
               <h2>Cardholder Information</h2>
-              <p>Enter the card details below. All data will be encrypted.</p>
+              <p>Enter the card details below.</p>
             </div>
           </div>
 
@@ -142,13 +142,13 @@
             <div>
               <label for="cardholderName">
                 Cardholder Name *
-                <span>Full name as it appears on the card.</span>
+                <span>Full name</span>
               </label>
               <input
                 type="text"
                 id="cardholderName"
                 name="cardholderName"
-                placeholder="e.g., John Doe"
+                placeholder="John Doe"
                 required
               />
             </div>
@@ -156,7 +156,7 @@
             <div>
               <label for="cardNumber">
                 Card Number (PAN) *
-                <span>16 digits - will be encrypted before storage.</span>
+                <span>16 digit Number</span>
               </label>
               <input
                 type="text"
@@ -164,7 +164,7 @@
                 name="cardNumber"
                 inputmode="numeric"
                 maxlength="19"
-                placeholder="1234 5678 9012 3456"
+                placeholder="1111 1111 1111 1111"
                 required
               />
             </div>
@@ -288,9 +288,14 @@
 
     <script src="assets/app.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        CardUi.initDashboard();
-      });
+      (function initDashboardWhenReady() {
+        const start = () => CardUi.initDashboard();
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start, { once: true });
+        } else {
+          start();
+        }
+      })();
     </script>
   </body>
 </html>

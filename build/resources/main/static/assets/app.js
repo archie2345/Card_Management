@@ -1,3 +1,4 @@
+// from anticon
 const CardIcons = {
   creditCard:
     '<span class="anticon anticon-credit-card" aria-hidden="true"><svg viewBox="64 64 896 896" focusable="false" data-icon="credit-card" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M880 298H144c-17.7 0-32 14.3-32 32v364c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V330c0-17.7-14.3-32-32-32zm-8 388H152V438h720v248zm0-308H152v-48h720v48zM344 562h248v60H344z"></path></svg></span>',
@@ -7,7 +8,7 @@ const CardIcons = {
     '<span class="anticon anticon-plus" aria-hidden="true"><svg viewBox="64 64 896 896" focusable="false" data-icon="plus" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M482 152h60v270h270v60H542v270h-60V482H212v-60h270z"></path></svg></span>',
 };
 
-// Simple API wrapper for card endpoints
+// API wrapper for card endpoints
 const CardApi = {
   async addCard(payload) {
     const response = await fetch("/api/cards", {
@@ -275,6 +276,12 @@ const CardUi = {
       return value.replace(/\D/g, "");
     }
 
+    function formatPan(value = "") {
+      const digits = toDigits(value).slice(0, 16);
+      const groups = digits.match(/.{1,4}/g) || [];
+      return groups.join(" ");
+    }
+
     async function executeSearch(lastFour, options = {}) {
       const trimmed = (lastFour || "").trim();
       if (trimmed.length !== 4 || /\D/.test(trimmed)) {
@@ -308,6 +315,21 @@ const CardUi = {
     }
 
     if (addForm) {
+      if (panInput) {
+        const enforcePanFormatting = () => {
+          const formatted = formatPan(panInput.value);
+          panInput.value = formatted;
+        };
+
+        panInput.addEventListener("input", enforcePanFormatting);
+        panInput.addEventListener("blur", enforcePanFormatting);
+        panInput.addEventListener("paste", () => {
+          requestAnimationFrame(enforcePanFormatting);
+        });
+
+        enforcePanFormatting();
+      }
+
       addForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         CardUi.clearMessage(addMessage);
@@ -340,12 +362,14 @@ const CardUi = {
           });
           CardUi.showMessage(
             addMessage,
-            "Card added successfully and is now stored securely.",
+            "Card added successfully",
             "success"
           );
           addForm.reset();
           if (cardholderInput) cardholderInput.focus();
-          await refreshTotals();
+          state.totalCards += 1;
+          setTotals(state.totalCards);
+          refreshTotals();
         } catch (error) {
           CardUi.showMessage(addMessage, error.message, "error");
         }
