@@ -12,6 +12,18 @@ Card Management is a Spring Boot application that uses Firestore-backed database
 ```
 On startup the Gradle task opens `http://localhost:8080` automatically.
 
+> **Heads up:** the default profile expects Google Cloud credentials so it can decrypt the encrypted service-account file and talk to Firestore/KMS.
+
+To run locally without those external dependencies, activate the `local` profile. It switches persistence to an in-memory data store and uses a built-in AES key for PAN encryption.
+
+```bash
+SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
+```
+On Windows PowerShell:
+```powershell
+$env:SPRING_PROFILES_ACTIVE='local'; ./gradlew bootRun
+```
+
 ### Run Tests
 ```bash
 ./gradlew test
