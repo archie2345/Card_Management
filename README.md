@@ -6,23 +6,29 @@ Card Management is a Spring Boot application that uses Firestore-backed database
 
 ## Getting Started
 
-### Run the Application
+> **Heads up:** the default profile expects Google Cloud credentials so it can decrypt the encrypted service-account file and talk to Firestore/KMS.
+### Step 1 
+#### Install the Google Cloud CLI(If not done already)
+- **macOS**
+  1. Ensure Homebrew is installed (`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`).
+  2. Install the SDK: `brew install --cask google-cloud-sdk`.
+  3. Restart your terminal so the `gcloud` binary is on the PATH.
+- **Windows**
+  1. Download the installer from the [Google Cloud SDK page](https://cloud.google.com/sdk/docs/install), if not already installed.
+  2. Run `GoogleCloudSDKInstaller.exe` and keep the default options to add `gcloud` to your PATH.
+  3. Open a new PowerShell session after the installer completes.
+
+### Step 2
+#### Authenticate with Google Cloud(for CLI to be authenticated)
+- **macOS (Terminal)**: `gcloud auth application-default login`
+- **Windows (PowerShell)**: `gcloud auth application-default login`
+
+### Step 3
+#### Run the Application
 ```bash
 ./gradlew bootRun
 ```
 On startup the Gradle task opens `http://localhost:8080` automatically.
-
-> **Heads up:** the default profile expects Google Cloud credentials so it can decrypt the encrypted service-account file and talk to Firestore/KMS.
-
-To run locally without those external dependencies, activate the `local` profile. It switches persistence to an in-memory data store and uses a built-in AES key for PAN encryption.
-
-```bash
-SPRING_PROFILES_ACTIVE=local ./gradlew bootRun
-```
-On Windows PowerShell:
-```powershell
-$env:SPRING_PROFILES_ACTIVE='local'; ./gradlew bootRun
-```
 
 ### Run Tests
 ```bash
