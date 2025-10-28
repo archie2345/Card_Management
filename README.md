@@ -6,22 +6,22 @@ Card Management is a Spring Boot application that uses Firestore-backed database
 
 ## Getting Started
 
-> **Heads up:** the default profile expects Google Cloud credentials so it can decrypt the encrypted service-account file and talk to Firestore/KMS.
+> **Heads up:** The application expects Google Cloud credentials so it can decrypt the encrypted service-account file and talk to Firestore/KMS.
 ### Step 1 
 #### Install the Google Cloud CLI(If not done already)
-- **macOS**
+- **For macOS**
   1. Ensure Homebrew is installed (`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`).
   2. Install the SDK: `brew install --cask google-cloud-sdk`.
   3. Restart your terminal so the `gcloud` binary is on the PATH.
-- **Windows**
+- **For Windows**
   1. Download the installer from the [Google Cloud SDK page](https://cloud.google.com/sdk/docs/install), if not already installed.
   2. Run `GoogleCloudSDKInstaller.exe` and keep the default options to add `gcloud` to your PATH.
   3. Open a new PowerShell session after the installer completes.
 
 ### Step 2
 #### Authenticate with Google Cloud(for CLI to be authenticated)
-- **macOS (Terminal)**: `gcloud auth application-default login`
-- **Windows (PowerShell)**: `gcloud auth application-default login`
+- **For macOS (Terminal)**: `gcloud auth application-default login`
+- **For Windows (PowerShell)**: `gcloud auth application-default login`
 
 ### Step 3
 #### Run the Application
@@ -37,11 +37,13 @@ On startup the Gradle task opens `http://localhost:8080` automatically.
 Simple WebMvc slice test, asserts the card creation and search endpoint returns the expected responses.
 You can find the result html file in `build/reports/tests/test/index.html`
 
-## Brief Database Description & Reasoning (for deliverables)
-
+## Brief Database Description & Reasoning
 - **Chosen DB:** Google Firestore (NoSQL).
-- **Reasoning:** I chose Google Firestore because it scales cleanly from a solo project to a full team: one managed, highly available datastore with minimal local setup, and no per-developer DB installs would be needed. Since I planned to use Cloud KMS, Firestore also keeps key handling simple, the service-account JSON file is encrypted with KMS and decrypted at runtime, so no plaintext secrets are committed. It also requires zero setup just running /gradlew bootRun is enough to fire up the whole application.         
-Compared to MySQL/Postgres, this avoids Docker/server setup, migrations, and credential rotation for every collaborator and compared to H2, it provides shared, persistent storage with production-like security and behavior. If the project grows, Firestore lets the whole team onboard quickly while keeping operations light.
+- **Reasoning:** I chose Firestore because it scales cleanly from a solo project to a full team: one managed, highly available datastore with minimal local setup and no per-developer DB installs. Since I planned to use Cloud KMS, I already had a GCP project and could keep key handling simple—the service-account JSON is encrypted with KMS and decrypted at runtime, so no plaintext secrets are committed; after a one-time gcloud auth application-default login, ./gradlew bootRun is enough to start the app. Firestore and KMS use Google IAM, so If i want i can grant least-privilege roles per environment (e.g., “Firestore User,” “KMS CryptoKey Decrypter”), rotate access centrally without code changes.         
+Compared to MySQL/Postgres, this avoids Docker/server setup, migrations, and credential rotation for every collaborator; compared to H2, it provides shared, persistent storage with production-like security and behavior. If the project grows, Firestore lets the team onboard quickly while keeping operations light.
+
+### Note 
+A card holder : 'Test User' , with PAN : 1234 1234 1234 1234 , has already been inputted into the database, for test purposes.
 
 
 ## Architecture Overview/Process
