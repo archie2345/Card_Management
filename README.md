@@ -1,4 +1,5 @@
-# Card Management System By Aarchi Mann
+# Card Management System(SafeCard)
+#### Name : Aarchi Mann
 #### email : aarchi.mann@sydney.edu.au
 
 Card Management is a Spring Boot application that uses Firestore-backed database along with Google KMS for security.
@@ -16,12 +17,13 @@ On startup the Gradle task opens `http://localhost:8080` automatically.
 ./gradlew test
 ```
 Simple WebMvc slice test, asserts the card creation and search endpoint returns the expected responses.
+You can find the result html file in `build/reports/tests/test/index.html`
 
 ## Brief Database Description & Reasoning (for deliverables)
 
 - **Chosen DB:** Google Firestore (NoSQL).
-- **Reasoning:** Firestore would best matche team needs for further collaboration if needed in the future, It was a better choice as it would need less stepup for handling keys as i knew i was gonna use Google KMS, and minimal local setup. 
-Compared to MySQL, it eliminates local Docker/seed complexity and centralizes data for all and compared to H2, it provides shared persistence and production-like security controls.
+- **Reasoning:** I chose Google Firestore because it scales cleanly from a solo project to a full team: one managed, highly available datastore with minimal local setup, and no per-developer DB installs would be needed. Since I planned to use Cloud KMS, Firestore also keeps key handling simple, the service-account JSON file is encrypted with KMS and decrypted at runtime, so no plaintext secrets are committed. It also requires zero setup just running /gradlew bootRun is enough to fire up the whole application.         
+Compared to MySQL/Postgres, this avoids Docker/server setup, migrations, and credential rotation for every collaborator and compared to H2, it provides shared, persistent storage with production-like security and behavior. If the project grows, Firestore lets the whole team onboard quickly while keeping operations light.
 
 
 ## Architecture Overview/Process
